@@ -800,7 +800,7 @@ const App: React.FC = () => {
         <div className="max-w-screen-2xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-4">
           <section className="lg:col-span-3 bg-white p-4 rounded-3xl shadow-sm border border-slate-100">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-[10px] font-black text-slate-400 uppercase">총급여액(비과세제외)</span>
+              <span className="text-[10px] font-black text-slate-900 uppercase">총급여액(비과세제외)</span>
               <span className="text-[10px] font-bold text-blue-500">근로소득: {calculateLaborIncomeAmount(totalSalary).toLocaleString()}원</span>
             </div>
             <div className="relative">
