@@ -192,7 +192,22 @@ export const calculateSpecialTaxCredits = (appliedPeople: Person[], totalSalary:
     if (!p.isIncomeOverLimit) {
       totalLifeIns += e.lifeInsurance;
       totalDisIns += e.disabledInsurance;
-      totalEdu += (e.eduPreSchool + e.eduSchool + e.eduUniv + e.eduDisabled);
+      
+      // 교육비 계산 (본인 무제한, 부양가족 한도 적용)
+      let personEdu = 0;
+      const isSelf = p.relationship === Relationship.SELF_M || p.relationship === Relationship.SELF_F;
+      if (isSelf) {
+        // 본인: 전액 공제
+        personEdu = e.eduPreSchool + e.eduSchool + e.eduUniv + e.eduDisabled;
+      } else {
+        // 부양가족: 항목별 한도 적용
+        personEdu = Math.min(e.eduPreSchool, 3000000) + 
+                    Math.min(e.eduSchool, 3000000) + 
+                    Math.min(e.eduUniv, 9000000) + 
+                    e.eduDisabled; // 장애인 특수교육비는 한도 없음
+      }
+      totalEdu += personEdu;
+
       totalDonations += (e.donationsReligious + e.donationsPublic);
       
       // 연금저축/IRP
